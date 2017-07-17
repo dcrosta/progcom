@@ -111,20 +111,6 @@
                 </tr>
                 {% endfor %}
                 </table>
-                <div class="panel-body">
-                    {% if existing_vote and existing_vote.nominate %}
-                    <button type="button" class="btn btn-block btn-success" id="nominate"><span class="glyphicon glyphicon-star"></span> Nominated for Special Consideration</button>
-                    <input name="nominate" value="1" type="hidden">
-                    {% else %}
-                    <button type="button" class="btn btn-block btn-default" id="nominate">Nominate for Special Consideration</button>
-                    <input name="nominate" value="0" type="hidden">
-                    {% endif %}
-                    <p class="help-block">
-                    If you feel this talk didn't meet the objective standards but would
-                    still be a strong addition to PyCon, you can nominate it for special
-                    consideration.
-                    </p>
-                </div>
                 <div class="panel-footer">
                     {% if existing_vote %}
                     <a href="/" class="btn btn-default btn-lg">Next Proposal &raquo;</a>
