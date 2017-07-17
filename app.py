@@ -331,7 +331,8 @@ def screening(id):
                             standards=standards,
                             existing_vote=existing_vote,
                             unread=unread,
-                            percent=percent)
+                            percent=percent,
+                            is_admin=bool(request.user.email in _ADMIN_EMAILS))
 
 @app.route('/screening/<int:id>/vote/', methods=['POST'])
 def vote(id):
