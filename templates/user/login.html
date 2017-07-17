@@ -1,8 +1,9 @@
 {%extends "base.html"%}
 {%block body %}
-<p>This website is for members of the PyCon program committee. If you are
-interested in joining, please 
-<a href="https://mail.python.org/mailman/listinfo/pycon-pc">join the mailing list</a>!</p>
+<p>This website is for voting on talk submissions for PyGotham 2017. Voting is open to the public,
+and anyone who is interested in helping is encouraged to <a href="{{ url_for('new_user') }}">sign up</a>
+for an account and lend a hand!
+</p>
 <form method="POST">
     <div class="form-group">
         <label for="email">Email address</label>

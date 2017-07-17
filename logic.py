@@ -783,7 +783,7 @@ def send_login_email(email):
         "personalizations": [
             {
                 "to": [{"email": user.email}],
-                "subject": 'PyCon Program Committee Password Reset',
+                "subject": 'PyGotham Program Committee Password Reset',
             }
         ],
         "from": {
