@@ -1,34 +1,23 @@
-Welcome to PyCon Program Committee Talk Review!
+Welcome to PyGotham Program Committee Talk Review!
 
-If you aren't already subscribed to the pycon-pc mailing list, please take the
-time to do that now! We use the mailing list for announcements and organization.
+During the public voting portion of the PyGotham selection process, we ask
+prospective attendees to help review the many proposals we have received. While
+there are many criteria that go into making a great PyGotham talk, what we want
+to learn now is simple: based on the information in the proposal, would you like
+to see the talk described at PyGotham in October?
 
-https://mail.python.org/mailman/listinfo/pycon-pc
+The talk review web site will ask you to assess this question on a 3 point
+scale, where "+1" means "I would definitely like to see this talk"; "0" means "I
+have no preference"; and "-1" means "I do not think this talk should be in
+PyGotham". Please note that you must click "Save Vote" in order for your vote to
+be counted.
 
-Before reviewing proposals, please read http://www.njl.us/essays/pycon-process/.
-It explains the screening criteria for the first stage of review in greater detail.
+The talk review web site will present talks you have not yet voted on to you in
+random order. You may rate as many or as few talks as you like, and you may skip
+any talks you do not wish to rate.
 
-When you're ready to get started, please log in at http://progcom.njl.us/. 
+When you're ready to get started, please log in at http://progcom.pygotham.org/.
 
-At that website you will see a talk proposal, chosen randomly from the pool of
-proposals that have the least reviews so far. Please review it based on the six
-criteria provided, nominate the talk for special consideration if you think it
-appropriate, and hit 'Save Vote' to save your vote.
-
-After you submit your evaluation, you'll be able to see how others have voted. If you
-disagree, feel free to start a discussion with other reviewers in the discussion box.
-After you have saved your evaluation, you can move on to the next proposal. Please
-vote for every proposal you are presented, in the state it is provided to you. We'll
-keep track of proposals that change after you vote on them, and allow you to go back
-and reevaluate them if necessary.
-
-Right now we are in the screening stage of talk proposal evaluation. Later stages
-of review will also occur on http://progcom.njl.us/, but we'll describe how those
-will work in a future mailing list message.
-
-We talk about proposals on a slack channel; you should receive an invite to the
-slack at https://pyconprogramcommittee.slack.com/ shortly.
-
-Thank you so much for your help in making this year's PyCon program--we can't do
-it without your time and thoughtful input. We hope you have fun reading these
+Thank you so much for your help in making this year's PyGotham program--we can't
+do it without your time and thoughtful input. We hope you have fun reading these
 talk proposals!
