@@ -787,8 +787,8 @@ def send_login_email(email):
             }
         ],
         "from": {
-            "email": "njl@njl.us",
-            "name": "Ned Jackson Lovely"
+            "email": "program@pygotham.org",
+            "name": "PyGotham Program Committee"
         },
         "content": [
             {
@@ -822,8 +822,8 @@ def email_approved(id):
             }
         ],
         "from": {
-            "email": "njl@njl.us",
-            "name": "Ned Jackson Lovely"
+            "email": "program@pygotham.org",
+            "name": "PyGotham Program Committee"
         },
         "content": [
             {
@@ -847,8 +847,8 @@ def email_new_user_pending(email, name):
             }
         ],
         "from": {
-            "email": "njl@njl.us",
-            "name": "PyCon Program Committee Robot"
+            "email": "program@pygotham.org",
+            "name": "PyGotham Program Committee"
         },
         "content": [
             {
@@ -876,8 +876,8 @@ def send_weekly_update():
             }
         ],
         "from": {
-            "email": "njl@njl.us",
-            "name": "PyCon Program Committee Robot"
+            "email": "program@pygotham.org",
+            "name": "PyGotham Program Committee"
         },
         "content": [
             {
@@ -1072,8 +1072,8 @@ def send_emails():
                         }
                     ],
                     "from": {
-                        "email": "njl@njl.us",
-                        "name": "Ned Jackson Lovely"
+                        "email": "program@pygotham.org",
+                        "name": "PyGotham Program Committee"
                     },
                     "content": [
                         {
@@ -1100,8 +1100,8 @@ def send_emails():
                     }
                 ],
                 "from": {
-                    "email": "njl@njl.us",
-                    "name": "Ned Jackson Lovely"
+                    "email": "program@pygotham.org",
+                    "name": "PyGotham Program Committee"
                 },
                 "content": [
                     {
