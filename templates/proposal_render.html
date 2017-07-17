@@ -79,7 +79,7 @@
                             btn-default
                             {%endif%}
 
-                                " data-val="2"><span class="glyphicon glyphicon-ok" title="Meets Standard"></span></button>
+                                " data-val="2">+1</button>
                             <button type="button"id="standard-id-{{s.id}}-1" 
                             class="btn
                             {% if existing_vote
@@ -88,7 +88,7 @@
                             {%else %}
                             btn-default
                             {%endif%}
-                                " data-val="1"><span class="glyphicon glyphicon-warning-sign" title="Concern it Might Not Meet Standard"></span></button>
+                                " data-val="1">0</button>
                             <button type="button" id="standard-id-{{s.id}}-0"
                             class="btn
                             {% if existing_vote
@@ -97,7 +97,7 @@
                             {%else %}
                             btn-default
                             {%endif%}
-                                " data-val="0"><span class="glyphicon glyphicon-remove" title="Does Not Meet Standard"></span></button>
+                                " data-val="0">-1</button>
                             <input name="standard-{{s.id}}"
                                 {%if existing_vote and existing_vote.scores %}
                                    value="{{existing_vote.scores[s.id]}}"
