@@ -62,16 +62,16 @@
         <div class="panel panel-primary" id="user-vote-block">
             <div class="panel-heading"
             data-content="These votes were loaded from your local browser cache, and are not yet saved." id="vote-panel">
-                <h3 class="panel-title">This Proposal...</h3>
+                <h3 class="panel-title">Vote</h3>
             </div>
             <form method="POST" action="vote/" id="vote-form">
                   <table class="table">
                 {% for s in standards %}
                 <tr>
                     <td>
-                        <div class="btn-group btn-group-xs voting-stripe" style="min-width:75px;">
+                      <div class="btn-group btn-group-xs voting-stripe" style="min-width:145px;">
                             <button type="button" id="standard-id-{{s.id}}-2"
-                            class="btn
+                            class="btn first
                             {% if existing_vote
                                     and existing_vote.scores[s.id] == 2 %}
                             btn-success
@@ -90,7 +90,7 @@
                             {%endif%}
                                 " data-val="1">0</button>
                             <button type="button" id="standard-id-{{s.id}}-0"
-                            class="btn
+                            class="btn last
                             {% if existing_vote
                                     and existing_vote.scores[s.id] == 0 %}
                             btn-danger
@@ -107,7 +107,7 @@
                             type="hidden">
                         </div>
                     </td>
-                    <td><small>{{s.description}}</small></td>
+                    <td>{{s.description}}</td>
                 </tr>
                 {% endfor %}
                 </table>

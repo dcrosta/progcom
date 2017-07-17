@@ -51,5 +51,16 @@
 }
 
 #vote-form button {
-  min-width: 26px;
+  min-height: 48px;
+  min-width: 48px;
+  font-size: 120%;
+  font-weight: bold;
+}
+
+#vote-form button.first {
+  border-radius: 5px 0 0 5px;
+}
+
+#vote-form button.last {
+  border-radius: 0 5px 5px 0;
 }
