@@ -349,6 +349,8 @@ def vote(id):
 
 @app.route('/screening/<int:id>/comment/', methods=['POST'])
 def comment(id):
+    if CUTOFF_FEEDBACK:
+        abort(404)
     comment = request.values.get('comment').strip()
     if comment:
         l.add_to_discussion(request.user.id, id, comment, feedback=False)
