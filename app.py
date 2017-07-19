@@ -57,7 +57,7 @@ def time_to_minutes(d):
     return d.hour*60+d.minute
 
 def set_nofollow(attrs, new=False):
-    attrs['target'] = '_blank'
+    attrs[None, u'target'] = u'_blank'
     return attrs
 
 
