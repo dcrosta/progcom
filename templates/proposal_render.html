@@ -19,6 +19,8 @@
           <tbody>
               <tr><th>Duration</th>
               <td>{{version.duration}}</td></tr>
+              <tr><th>Audience Level</th>
+              <td>{{version.audience}}</td></tr>
               {% if not anonymize %}
                   <tr><th>Proposer(s)</th>
                   <td>{{proposal.authors|map(attribute='name')|join(", ")}}</td></tr>
@@ -40,10 +42,6 @@
         <h3>Description</h3>
         <p>
         {{version.description|markdown}}
-        </p>
-        <h3>Audience</h3>
-        <p>
-        {{version.audience}}
         </p>
         <h3>Outline</h3>
         <p>
