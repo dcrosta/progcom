@@ -16,7 +16,7 @@ The talk review web site will present talks you have not yet voted on to you in
 random order. You may rate as many or as few talks as you like, and you may skip
 any talks you do not wish to rate.
 
-When you're ready to get started, please log in at http://progcom.pygotham.org/.
+When you're ready to get started, please log in at https://vote.pygotham.org/.
 
 Thank you so much for your help in making this year's PyGotham program--we can't
 do it without your time and thoughtful input. We hope you have fun reading these
