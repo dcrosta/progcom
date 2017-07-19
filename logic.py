@@ -336,7 +336,8 @@ def scored_proposals():
         'title':proposal.title,
         'batch_id': proposal.batch_id,
         'batchgroup':proposal.batchgroup,
-        'accepted':proposal.accepted})
+        'accepted':proposal.accepted,
+        'num_votes': len(v)})
     rv.sort(key=lambda x:-x['nom_is_green'])
     for n, v in enumerate(rv):
         v['delta'] = abs(v['score'] - v['nom_is_green'])
