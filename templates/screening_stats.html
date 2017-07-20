@@ -55,7 +55,7 @@
         <thead><tr><th>Voter</th><th>Votes</th><th>% Coverage</th></tr></thead>
         <tbody>
             {% for user in users%}
-            <tr><td>{{user.display_name}}</td>
+            <tr><td>ID: {{user.id}}</td>
                 <td>{{user.votes}}</td>
                 <td>{{"%.2f"|format(user.votes/(total_proposals-user.proposals_made)*100)}}</td>
             </tr>
