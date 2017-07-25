@@ -1,6 +1,7 @@
 flask
 sqlalchemy
 bcrypt
+bunch
 psycopg2
 itsdangerous
 sendgrid

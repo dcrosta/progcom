@@ -5,6 +5,7 @@ import random
 import time
 from collections import defaultdict
 
+from bunch import Bunch
 from flask import (Flask, render_template, request, session, url_for, redirect,
                     flash, abort, jsonify)
 from jinja2 import Markup
@@ -74,7 +75,8 @@ Account Silliness
 """ 
 @app.before_request
 def security_check():
-    request.user = l.get_user(session.get('userid'))
+    userdata = l.get_user(session.get('userid'))
+    request.user = Bunch(userdata._asdict())
 
     if request.user and not request.user.approved:
         session.clear()
