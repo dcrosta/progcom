@@ -462,4 +462,4 @@ def pick():
     return redirect(url_for('screening', id=id))
 
 if __name__ == '__main__':
-    app.run(port=4000, debug=True)
+    app.run(port=4000, debug=True, use_debugger=True, use_reloader=True)
