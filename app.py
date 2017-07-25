@@ -82,6 +82,8 @@ def security_check():
         session.clear()
         return redirect(url_for('login'))
 
+    request.user.is_admin = bool(request.user.email in _ADMIN_EMAILS)
+
     path = request.path
     if (request.user and path.startswith('/admin') 
             and request.user.email not in _ADMIN_EMAILS):
