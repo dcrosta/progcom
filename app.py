@@ -75,16 +75,27 @@ Account Silliness
 """ 
 @app.before_request
 def security_check():
-    userdata = l.get_user(session.get('userid'))
-    request.user = Bunch(userdata._asdict())
+    path = request.path
+    if path == "/user/login/":
+        return
 
-    if request.user and not request.user.approved:
+    userdata = l.get_user(session.get('userid'))
+    if userdata:
+        request.user = Bunch(userdata._asdict())
+    else:
+        # avoid errors below
+        request.user = Bunch({
+            "approved": False,
+            "disabled": True,
+            "email": None,
+        })
+
+    if request.user and (not request.user.approved or request.user.disabled):
         session.clear()
         return redirect(url_for('login'))
 
     request.user.is_admin = bool(request.user.email in _ADMIN_EMAILS)
 
-    path = request.path
     if (request.user and path.startswith('/admin') 
             and request.user.email not in _ADMIN_EMAILS):
         abort(403)
@@ -120,6 +131,9 @@ def login_post():
     user = l.get_user(uid)
     if not user.approved:
         flash('You have not yet been approved.')
+        return redirect(url_for('login'))
+    if user.disabled:
+        flash('Only program committee members may log in')
         return redirect(url_for('login'))
     session['userid'] = uid
     return redirect('/')

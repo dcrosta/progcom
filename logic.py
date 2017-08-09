@@ -116,6 +116,7 @@ def get_user(id):
     if not id:
         return None
     q = '''SELECT id, email, display_name, approved_on IS NOT NULL AS approved,
+                  disabled,
             EXISTS (SELECT 1 FROM unread WHERE voter=%s limit 1) 
                 AS unread,
             EXISTS (SELECT 1 FROM votes 

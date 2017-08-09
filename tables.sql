@@ -3,6 +3,7 @@ CREATE TABLE users (
     email           VARCHAR(254) NOT NULL,
     display_name    VARCHAR(80),
     pw              VARCHAR(80),
+    disabled        BOOLEAN DEFAULT FALSE,
     created_on      TIMESTAMP WITH TIME ZONE DEFAULT now(),
     approved_on     TIMESTAMP WITH TIME ZONE DEFAULT NULL
 );
