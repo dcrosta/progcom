@@ -21,16 +21,6 @@
               <td>{{version.duration}}</td></tr>
               <tr><th>Audience Level</th>
               <td>{{version.audience}}</td></tr>
-              {% if not anonymize %}
-                  <tr><th>Proposer(s)</th>
-                  <td>{{proposal.authors|map(attribute='name')|join(", ")}}</td></tr>
-              {% endif %}
-              {% if not hidetimes%}
-              <tr><th>Created</th>
-              <td>{{proposal.added_on|date}}</td></tr>
-              <tr><th>Last Updated</th>
-              <td>{{version.when|date}}</td></tr>
-              {%endif%}
           </tbody>
         </table>
         <h3>Abstract</h3>
