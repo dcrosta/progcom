@@ -536,7 +536,8 @@ def list_groups(userid):
 def get_group(batchgroup):
     return fetchone('''SELECT *,
             ARRAY(SELECT display_name FROM users
-                    WHERE users.email = ANY (batchgroups.author_emails))
+                    WHERE users.email = ANY (batchgroups.author_emails)
+                      AND users.disabled = false)
                 AS progcom_members
             FROM batchgroups WHERE id=%s''', batchgroup)
 
