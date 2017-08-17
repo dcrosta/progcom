@@ -76,8 +76,10 @@ Account Silliness
 @app.before_request
 def security_check():
     path = request.path
-    if path == "/user/login/":
-        return
+    safe_prefixes = ('/static', '/user')
+    for prefix in safe_prefixes:
+        if path.startswith(prefix):
+            return
 
     userdata = l.get_user(session.get('userid'))
     if userdata:
