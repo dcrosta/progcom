@@ -219,6 +219,7 @@ Batch Actions
 @app.route('/batch/')
 def batch_splash_page():
     groups = [x._asdict() for x in l.list_groups(request.user.id)]
+    groups.sort(key=lambda row: row["voted"])
     unread = l.get_unread_batches(request.user.id)
     stats = l.get_batch_stats()
     for group in groups:
