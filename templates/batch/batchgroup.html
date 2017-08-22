@@ -173,35 +173,6 @@
     
     {{br.batch_discussion(msgs, group.locked)}}
 
-            {% if vote or group.locked %}
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Votes</h3>
-                </div>
-                <table class="table table-striped">
-                    <tbody>
-                        {% for v in all_votes %}
-                        <tr>
-                            <th>{{v.display_name}}</th>
-                            <td>
-                                {% for id in v.accept %}
-                                <ul class="list-inline">
-                                {% if id in proposal_map %}
-                                <li>{{proposal_map[id].data.title}} (#{{id}})</li>
-                                {% endif %}
-                                </ul>
-                                {% else %}
-                                Don't advance any proposals.
-                                {% endfor %}
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-
-            </div>
-            {% endif %}
-
     </div><!--end side column-->
 </div>
 <script>
