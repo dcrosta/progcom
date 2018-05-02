@@ -1,5 +1,5 @@
 from collections import namedtuple, defaultdict, Counter
-import os 
+import os
 import random
 import json
 import logging
@@ -19,6 +19,8 @@ from jinja2 import Environment, FileSystemLoader
 
 from gensim import corpora, models, similarities
 from gensim.similarities.docsim import MatrixSimilarity
+
+import password
 
 """
 Log It
@@ -77,19 +79,11 @@ def scalar(*args, **kwargs):
 """
 User management
 """
-_SALT_ROUNDS=12
-def _mangle_pw(pw, salt=None):
-    if not salt:
-        salt = bcrypt.gensalt(rounds=_SALT_ROUNDS)
-    else:
-        salt = salt.encode('utf-8')
-    return bcrypt.hashpw(pw.encode('utf-8'), salt)
-
 def add_user(email, display_name, pw):
     q = '''INSERT INTO users (email, display_name, pw)
                 VALUES (%s, %s, %s) RETURNING id'''
     try:
-        id = scalar(q, email, display_name, _mangle_pw(pw))
+        id = scalar(q, email, display_name, password.mangle(pw))
         l('add_user', email=email, display_name=display_name, uid=id)
     except IntegrityError:
         l('add_user_dupe', email=email, display_name=display_name)
@@ -107,7 +101,7 @@ def check_pw(email_address, pw):
     if not result:
         l('check_pw_bad_email', email=email_address)
         return None
-    if _mangle_pw(pw, result.pw) == result.pw:
+    if password.mangle(pw, result.pw) == result.pw:
         l('check_pw_ok', email=email_address)
         return result.id
     l('check_pw_bad', email=email_address)
@@ -116,7 +110,7 @@ def check_pw(email_address, pw):
 def change_pw(id, pw):
     q = 'UPDATE users SET pw=%s WHERE id=%s RETURNING id'
     l('change_pw', uid=id)
-    return bool(scalar(q, _mangle_pw(pw), id))
+    return bool(scalar(q, password.mangle(pw), id))
 
 def get_user(id):
     if not id:

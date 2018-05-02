@@ -44,6 +44,14 @@ The unit tests will create the tables for you, or you can do something like
 `psql -U test test < tables.sql` to create empty tables from scratch.
 
 
+Initial User Provisioning
+-------------------------
+
+You can run `python password.py yourPasswordHere` to generate the hashed
+password for manual insertion into the `users` table. This is usually only
+necessary for the initial user; afterwards, users can sign up via the web
+site, and you can approve them from the links in the emails.
+
 
 
 Running the Application
