@@ -36,7 +36,13 @@ def l(key, **data):
 """
 Some DB wrapper stuff
 """
-_e = create_engine(os.environ['PSQL_CONNECTION_STRING'])
+heroku_dsn = os.environ.get('DATABASE_URL')
+if heroku_dsn and heroku_dsn.startswith("postgres://"):
+    dsn = "postgresql+psycopg2://" + heroku_dsn[len("postgres://"):]
+else:
+    dsn = os.environ['PSQL_CONNECTION_STRING']
+
+_e = create_engine(dsn)
 
 __TUPLE_CACHE = {}
 def build_tuple(keys):

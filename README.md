@@ -67,6 +67,15 @@ appropriate secrets. From the application's root directory, you can run
 `ansible-playbook -i hosts deploy.yaml`.
 
 
+Heroku Deployment
+-----------------
+
+Set configs with `heroku config:set` for each var named in dev-config/.
+
+Enable Heroku PosgreSQL. `logic.py` has special handling to deal with
+Heroku's `DATABASE_URL` environment variable, so you don't need to set the
+Postgres env var.
+
 
 Understanding The PyCon Talk Review Process
 ------------
