@@ -1,5 +1,7 @@
 from urllib import urlencode
 import os
+import random
+import string
 
 import requests
 
@@ -30,9 +32,16 @@ def get_papercall_submissions():
 
         page += 1
 
-def convert_submission(sub):
+def convert_submission(sub, anonymous):
     talk = sub["talk"]
-    profile = sub["profile"]
+    if anonymous:
+        profile = {
+            "name": "Anonymous Submitter",
+            "email": "".join(random.choice(string.ascii_letters) for _ in range(10)) + "@pygotham.org",
+        }
+    else:
+        profile = sub["profile"]
+
     return {
         "id": sub["id"],
         "title": talk["title"],
@@ -52,11 +61,15 @@ def convert_submission(sub):
     }
 
 
-def main():
+def main(anonymous):
     for submission in get_papercall_submissions():
-        proposal = convert_submission(submission)
+        proposal = convert_submission(submission, anonymous)
         logic.add_proposal(proposal)
 
 
 if __name__ == "__main__":
-    main()
+    import sys
+    if len(sys.argv) == 2 and sys.argv[1] == "--anonymous":
+        main(anonymous=True)
+    else:
+        main(anonymous=False)
