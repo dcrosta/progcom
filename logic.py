@@ -269,11 +269,10 @@ def get_votes(proposal):
 
 def needs_votes(email, uid):
     q = '''SELECT id, vote_count FROM proposals
-            WHERE NOT (lower(%s) = ANY(author_emails) )
-            AND NOT (%s = ANY(voters))
-            AND NOT withdrawn 
+            WHERE NOT (%s = ANY(voters))
+            AND NOT withdrawn
             ORDER BY vote_count ASC'''
-    results = fetchall(q, email, uid)
+    results = fetchall(q, uid)
     if not results:
         return None
     min_vote = results[0].vote_count
