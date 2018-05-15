@@ -228,27 +228,29 @@ def add_standard(s):
 def _clean_vote(vote):
     return vote._replace(scores={int(k):v for k,v in vote.scores.items()}) 
 
-def vote(voter, proposal, scores, nominate=False):
-    l('vote', uid=voter, id=proposal, scores=scores, nominate=nominate)
+def vote(voter, proposal, scores, feedback=""):
+    l('vote', uid=voter, id=proposal, scores=scores, feedback=feedback)
     if not get_user(voter).approved:
+        l('vote', msg='rejecting not-approved voter')
         return None
 
     if set(scores.keys()) != set(x.id for x in get_standards()):
         return None
     for v in scores.values():
-        if not 0 <= v <= 2:
+        if not -3 <= v <= 2:
+            l('vote', msg='rejecting out-of-range score')
             return None
 
-    q = '''INSERT INTO votes (voter, proposal, scores, nominate)
+    q = '''INSERT INTO votes (voter, proposal, scores, feedback)
             VALUES (%s, %s, %s, %s) RETURNING id'''
     try:
-        return scalar(q, voter, proposal, json.dumps(scores), nominate)
+        return scalar(q, voter, proposal, json.dumps(scores), feedback)
     except IntegrityError as e:
         pass
 
-    q = '''UPDATE votes SET scores=%s, updated_on=now(), nominate=%s
+    q = '''UPDATE votes SET scores=%s, updated_on=now(), feedback=%s
             WHERE voter=%s AND proposal=%s RETURNING id'''
-    return scalar(q, [[json.dumps(scores), nominate, voter, proposal]])
+    return scalar(q, [[json.dumps(scores), feedback, voter, proposal]])
 
 def get_user_vote(userid, proposal):
     q = '''SELECT * FROM votes WHERE
@@ -297,7 +299,7 @@ def _score_weight_average(v):
     return int(100*sum(v)/(2.0*len(v)))
 
 def scored_proposals():
-    q = '''SELECT scores, nominate, proposal, proposals.data->>'title' AS title,
+    q = '''SELECT scores, feedback, proposal, proposals.data->>'title' AS title,
                     proposals.accepted,
                     batchgroups.name as batchgroup,
                     batchgroups.id as batch_id
@@ -308,7 +310,6 @@ def scored_proposals():
     scores = defaultdict(list)
     nom_green = defaultdict(list)
     greenness = defaultdict(list)
-    nominations = Counter()
     proposals_by_id = {v.proposal:v for v in votes}
     """
     titles = {v.proposal:v.title for v in votes}
@@ -317,15 +318,10 @@ def scored_proposals():
     """
     for v in votes:
         scores[v.proposal].extend(v.scores.values())
-        if v.nominate:
-            nom_green[v.proposal].extend(2 for _ in v.scores.values())
-            greenness[v.proposal].append(1.0)
-        else:
-            nom_green[v.proposal].extend(v.scores.values())
-            greenness[v.proposal].append(sum(1.0 for x in v.scores.values()
-                                            if x == 2)
-                                                /(1.0*len(v.scores.values())))
-        nominations[v.proposal] += 1 if v.nominate else 0
+        nom_green[v.proposal].extend(v.scores.values())
+        greenness[v.proposal].append(sum(1.0 for x in v.scores.values()
+                                        if x == 2)
+                                            /(1.0*len(v.scores.values())))
     rv = []
 
     for k,v in scores.items():
@@ -333,7 +329,7 @@ def scored_proposals():
         rv.append({'id':k, 'score':_score_weight_average(v),
             'nom_is_green':_score_weight_average(nom_green[k]),
             'greenness':int(100*sum(greenness[k])/len(greenness[k])),
-        'nominations': nominations[k],
+        'nominations': 0,
         'title':proposal.title,
         'batch_id': proposal.batch_id,
         'batchgroup':proposal.batchgroup,
@@ -509,6 +505,7 @@ def get_batch_stats():
         id = group['id']
         group['voters'] = batch_voters.get(id, 0)
         group['msgs'] = message_count.get(id, 0)
+        # TODO: this is probably broken but we aren't using batch
         nominated_talks = batchmap.get(id, defaultdict(int))
         group['nominated_talks'] = len(nominated_talks)
         group['nominations'] = sum(nominated_talks.values())

@@ -303,7 +303,7 @@ def screening_stats():
     votes_when = l.get_votes_by_day()
     coverage_by_age = l.coverage_by_age()
     active_discussions = l.active_discussions()
-    nomination_density = l.nomination_density()
+    nomination_density = {}
     return render_template('screening_stats.html',
                             users=users, progress=progress,
                             nomination_density=nomination_density,
@@ -347,8 +347,8 @@ def vote(id):
     scores = {}
     for s in standards:
         scores[s.id] = int(request.values['standard-{}'.format(s.id)])
-    nominate = request.values.get('nominate', '0') == '1'
-    l.vote(request.user.id, id, scores, nominate)
+    feedback = request.values.get('feedback', '')
+    l.vote(request.user.id, id, scores, feedback=feedback)
     return render_template('user_vote_snippet.html', 
                             standards=l.get_standards(),
                             votes = l.get_votes(id),

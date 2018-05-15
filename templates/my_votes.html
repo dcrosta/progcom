@@ -12,9 +12,9 @@
         <th data-column="title">Talk</th>
         {% for s in standards %}
         <th data-column="vote" data-standard="{{s.id}}"
-            title="{{s.description}}">{{s.description|truncate(25)}}</th>
+            title="{{s.description}}">Vote</th>
         {% endfor %}
-        <th data-column="nominate" data-reverse="1">Nominated</th>
+        <th data-column="feedback" data-reverse="1">Feedback</th>
         <th data-column="updated_on" data-reverse="1">When</th>
         <th data-column="updated" data-reverse="1"
             class="warning">Updated</th>
@@ -35,20 +35,34 @@
     <% _.each(raw_standards, function(s){ %>
         <td>
         <% switch(e.scores[s.id]){
-            case 0:
+            case -3:
+                %>
+<span class="label label-danger"><span class="glyphicon glyphicon-fire"></span></span>
+                <%
+                break;
+            case -2:
                 %>
 <span class="label label-danger"><span class="glyphicon glyphicon-remove"></span></span>
                 <%
                 break;
+            case -1:
+                %>
+<span class="label label-warning"><span class="glyphicon glyphicon-thumbs-down"></span></span>
+                <%
+                break;
+            case 0:
+                %>
+<span class="label label-info"><span class="glyphicon glyphicon-option-horizontal"></span></span>
+                <%
+                break;
             case 1:
                 %>
-<span class="label label-warning"><span class="glyphicon glyphicon-warning-sign"></span></span>
-                
+<span class="label label-success"><span class="glyphicon glyphicon-thumbs-up"></span></span>
                 <%
                 break;
             case 2:
                 %> 
-<span class="label label-success"><span class="glyphicon glyphicon-ok"></span></span>
+<span class="label label-success"><span class="glyphicon glyphicon-heart"></span></span>
                 <%
                 break;
             default:
@@ -58,10 +72,7 @@
         </td>
     <% }); %>
 
-    <td><%if(e.nominate){ %>
-        <span class="glyphicon glyphicon-star"></span>
-        <% } %>
-    </td>
+    <td style="max-width:300px"><%=e.feedback%></td>
     <td><% var date_tmp = new Date(e.updated_on); %>
         <%= date_tmp.toLocaleDateString() %>
         <%= date_tmp.toLocaleTimeString() %> </td>

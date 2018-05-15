@@ -46,58 +46,74 @@
   </div>
 {%endmacro%}
 
+{%macro btn_css(score, target) -%}
+{% if score == target -%}
+{% if target == -3 or target == -2 -%}
+btn-danger
+{% elif target == -1 -%}
+btn-warning
+{% elif target == 1 or target == 2 -%}
+btn-success
+{% else -%}
+btn-info
+{% endif -%}
+{% else -%}
+btn-default
+{% endif -%}
+{% endmacro %}
+
 {%macro user_vote_render(standards, existing_vote)%}
         <div class="panel panel-primary" id="user-vote-block">
             <div class="panel-heading"
             data-content="These votes were loaded from your local browser cache, and are not yet saved." id="vote-panel">
-                <h3 class="panel-title">Vote</h3>
+                <h3 class="panel-title">Should this talk be in PyGotham?</h3>
             </div>
             <form method="POST" action="vote/" id="vote-form">
                   <table class="table">
                 {% for s in standards %}
                 <tr>
                     <td>
-                      <div class="btn-group btn-group-xs voting-stripe" style="min-width:145px;">
-                            <button type="button" id="standard-id-{{s.id}}-2"
-                            class="btn first
-                            {% if existing_vote
-                                    and existing_vote.scores[s.id] == 2 %}
-                            btn-success
-                            {%else %}
-                            btn-default
-                            {%endif%}
-
-                                " data-val="2">+1</button>
-                            <button type="button"id="standard-id-{{s.id}}-1" 
-                            class="btn
-                            {% if existing_vote
-                                    and existing_vote.scores[s.id] == 1 %}
-                            btn-warning
-                            {%else %}
-                            btn-default
-                            {%endif%}
-                                " data-val="1">0</button>
-                            <button type="button" id="standard-id-{{s.id}}-0"
-                            class="btn last
-                            {% if existing_vote
-                                    and existing_vote.scores[s.id] == 0 %}
-                            btn-danger
-                            {%else %}
-                            btn-default
-                            {%endif%}
-                                " data-val="0">-1</button>
-                            <input name="standard-{{s.id}}"
-                                {%if existing_vote and existing_vote.scores %}
-                                   value="{{existing_vote.scores[s.id]}}"
-                                {% else %}
-                                   value="-1"
-                                {% endif %}
-                            type="hidden">
-                        </div>
+                        {% if existing_vote %}
+                        {% set score = existing_vote.scores[s.id] %}
+                        {% else %}
+                        {% set score = None %}
+                        {% endif %}
+                        <button type="button" id="standard-id-{{s.id}}-plus-2"
+                                class="btn score {{ btn_css(score, 2) }}"
+                                data-val="2">I love this talk: I would change my schedule to see this talk at the conference</button>
+                        <button type="button" id="standard-id-{{s.id}}-plus-1"
+                                class="btn score {{ btn_css(score, 1) }}"
+                                data-val="1">I like this talk: I would probably see it at the conference</button>
+                        <button type="button" id="standard-id-{{s.id}}-zero"
+                                class="btn score {{ btn_css(score, 0) }}"
+                                data-val="0">I'm ambivalent</button>
+                        <button type="button" id="standard-id-{{s.id}}-minus-1"
+                                class="btn score {{ btn_css(score, -1) }}"
+                                data-val="-1">I'd rather not: this talk is not interesting to me</button>
+                        <button type="button" id="standard-id-{{s.id}}-minus-2"
+                                class="btn score {{ btn_css(score, -2) }}"
+                                data-val="-2">Definitely not: this talk has major technical issues or is not a complete proposal</button>
+                        <button type="button" id="standard-id-{{s.id}}-minus-3"
+                                class="btn score {{ btn_css(score, -3) }}"
+                                data-val="-3">Definitely not: this talk may pose a code of conduct issue</button>
+                        <input name="standard-{{s.id}}"
+                            {%if existing_vote and existing_vote.scores %}
+                               value="{{existing_vote.scores[s.id]}}"
+                            {% else %}
+                               value=""
+                            {% endif %}
+                        type="hidden">
                     </td>
-                    <td>{{s.description}}</td>
                 </tr>
                 {% endfor %}
+                <tr>
+                  <td>
+                    <p><strong>Additional feedback:</strong> (optional)</p>
+                    <p>You may use this area to explain why you gave the score you did. <em id="explain-score">Please explain scores of "definitely not."</em></p>
+                    <textarea id="feedback" name="feedback">{{existing_vote.feedback}}</textarea>
+                    <p><em>Feedback will only be visible to the PyGotham program committee, not to the speaker nor other voters.</em></p>
+                  </td>
+                </tr>
                 </table>
                 <div class="panel-footer">
                     {% if existing_vote %}

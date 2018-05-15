@@ -91,7 +91,7 @@ CREATE TABLE votes (
     voter       BIGINT REFERENCES users,
     proposal    BIGINT REFERENCES proposals,
 
-    nominate    BOOLEAN DEFAULT FALSE,
+    feedback    TEXT,
 
     updated_on  TIMESTAMP WITH TIME ZONE DEFAULT now(),
     added_on    TIMESTAMP WITH TIME ZONE DEFAULT now(),

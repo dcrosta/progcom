@@ -57,10 +57,17 @@
   font-weight: bold;
 }
 
-#vote-form button.first {
-  border-radius: 5px 0 0 5px;
+#vote-form button.score {
+  width: 100%;
+  min-height: 4em;
+  white-space: normal;
+  border-radius: 4px;
+  margin: 0.25em 0;
+  font-weight: normal;
+  font-size: 100%;
 }
 
-#vote-form button.last {
-  border-radius: 0 5px 5px 0;
+#vote-form textarea {
+  width: 100%;
+  min-height: 10em;
 }

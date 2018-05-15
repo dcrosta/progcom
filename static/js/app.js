@@ -42,11 +42,24 @@ function nominate_status(){
 
 function vote_click(){
     var $this = $(this);
-    $this.siblings('input').val($this.data().val);
-    $this.siblings().addClass('btn-default').removeClass('btn-success btn-warning btn-danger');
-    $this.addClass({'0':'btn-danger', '1':'btn-warning', '2': 'btn-success'}[$this.data().val])
+    var val = $this.data().val;
+    if (val <= -2) {
+      $('#explain-score').css('font-weight', 'bold');
+    } else {
+      $('#explain-score').css('font-weight', 'normal');
+    }
+    $this.siblings('input').val(val);
+    $this.siblings().addClass('btn-default').removeClass('btn-success btn-warning btn-danger btn-info');
+    $this.addClass({
+      '-3':'btn-danger',
+      '-2':'btn-danger',
+      '-1':'btn-warning',
+      '0':'btn-info',
+      '1': 'btn-success',
+      '2': 'btn-success',
+    }[$this.data().val])
     $this.removeClass('btn-default');
-    $('#save').attr('disabled', $('#vote-form input[value=-1]').length > 0);
+    $('#save').attr('disabled', $('#vote-form input[value=""]').length > 0);
     nominate_status()
 }
 
@@ -166,7 +179,7 @@ $(document).ready(function(){
     $('#batch-right-column').on('submit', '#add-comment', batch_add_comment);
 
     //Screening
-    $('#right-column').on('click', '.voting-stripe button', vote_click);
+    $('#right-column').on('click', '#vote-form button', vote_click);
     $('#right-column').on('click', '#nominate', nominate_click);
     $('#right-column').on('click', '#save', save_vote);
     $('#right-column').on('click', '#mark-read', mark_read);
