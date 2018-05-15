@@ -1,16 +1,26 @@
 Welcome to PyGotham Program Committee Talk Review!
 
 During the public voting portion of the PyGotham selection process, we ask
-prospective attendees to help review the many proposals we have received. While
-there are many criteria that go into making a great PyGotham talk, what we want
-to learn now is simple: based on the information in the proposal, would you like
-to see the talk described at PyGotham in October?
+prospective attendees to help review the many proposals we have received.
+Community interest is a critical factor in assembling a great conference, and
+that is primarily what we want to do with public voting: find out what talks
+*you* want to see.
 
-The talk review web site will ask you to assess this question on a 3 point
-scale, where "+1" means "I would definitely like to see this talk"; "0" means "I
-have no preference"; and "-1" means "I do not think this talk should be in
-PyGotham". Please note that you must click "Save Vote" in order for your vote to
-be counted.
+This year we are using a revised voting system that we hope will simplify the
+process. Rather than voting on an abstract points scale, we have provided
+options to indicate your level of interest described in english. We hope that
+this will lead to a simpler and more consistent set of reviews. We have also
+added a free-form text field in which you can explain your choice or give
+feedback to the program committe. Please use it!
+
+Please note that you must click "Save Vote" in order for your vote to be
+counted.
+
+We have also added a way for you to report talks which you feel may violate the
+PyGotham Code of Conduct [1]. We will do everything within our power to ensure
+that talks that could pose Code of Conduct violations won't even make it as far
+as voting, but we may miss something. Please only use this rating for true Code
+of Conduct issues.
 
 The talk review web site will present you with talks in random order, omitting
 the ones you have already voted on. You may rate as many or as few talks as you
@@ -18,6 +28,10 @@ like, and you may skip any talks you do not wish to rate.
 
 When you're ready to get started, please log in at https://vote.pygotham.org/.
 
-Thank you so much for your help in making this year's PyGotham program--we can't
-do it without your time and thoughtful input. We hope you have fun reading these
-talk proposals!
+Thank you so much for your help in making this year's PyGotham program -- we
+can't do it without your time and thoughtful input. We hope you have fun reading
+these talk proposals!
+
+
+
+[1] https://2018.pygotham.org/about/code-of-conduct/
