@@ -399,6 +399,8 @@ Author Feedback
 
 @app.route('/feedback/<key>')
 def author_feedback(key):
+    if CUTOFF_FEEDBACK:
+        abort(404)
     name, id = l.check_author_key(key)
     if not name:
         return render_template('bad_feedback_key.html')
