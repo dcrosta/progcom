@@ -15,6 +15,12 @@
     {% for version in proposal.data_history%}
     <div class="tab-pane{%if loop.first%} active{%endif%}" id="rev-{{loop.index0}}">
         <h1>{{version.title}}</h1>
+        <table class="table">
+          <tbody>
+              <tr><th>Duration</th>
+              <td>{{version.duration}}</td></tr>
+          </tbody>
+        </table>
         <h3>Abstract</h3>
         <p>
         {{version.abstract|markdown}}
