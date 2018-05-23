@@ -61,15 +61,20 @@ def convert_submission(sub, anonymous):
     }
 
 
-def main(anonymous):
+def main(anonymous, talk_ids):
     for submission in get_papercall_submissions():
         proposal = convert_submission(submission, anonymous)
+        if talk_ids and proposal["id"] not in talk_ids:
+            continue
         logic.add_proposal(proposal)
 
 
 if __name__ == "__main__":
     import sys
-    if len(sys.argv) == 2 and sys.argv[1] == "--anonymous":
-        main(anonymous=True)
-    else:
-        main(anonymous=False)
+    import argparse
+    parser = argparse.ArgumentParser(description="Import talks from PaperCall")
+    parser.add_argument("--anonymous", default=False, help="Don't import speaker information")
+    parser.add_argument("talk_ids", metavar="TALK_ID", type=int, nargs="+", help="Import only the listed papercall talk IDs")
+    opts = parser.parse_args()
+
+    main(opts.anonymous, frozenset(opts.talk_ids))
