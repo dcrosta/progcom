@@ -1115,3 +1115,18 @@ def send_emails():
             acceptance +=1
     print 'Declined: {}'.format(declined)
     print 'Accepted: {}'.format(acceptance)
+
+def code_of_conduct_reports():
+    q = '''SELECT 
+            u.email as voter_email,
+            u.display_name as voter_name,
+            p.data->>'title' as title,
+            p.id as talk_id,
+            v.feedback as feedback,
+            v.updated_on as date
+            FROM votes v
+            JOIN users u ON (v.voter = u.id)
+            JOIN proposals p ON (v.proposal = p.id)
+            WHERE v.scores->>'1' = '-3'
+    '''
+    return fetchall(q)

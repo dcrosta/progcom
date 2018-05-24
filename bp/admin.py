@@ -110,3 +110,14 @@ def adjust_schedule():
     l.set_schedule(request.values.get('proposal'),
                         request.values.get('slot'))
     return jsonify(ok='ok')
+
+
+@bp.route('/coc/')
+def coc_reports():
+    reports = l.code_of_conduct_reports()
+    return render_template('admin/coc.html', reports=reports)
+
+
+@bp.route('/votes/')
+def vote_distribution():
+    return "hello"

@@ -1,0 +1,23 @@
+{%extends "base.html"%}
+{%block body %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Voter</th>
+            <th>Talk</th>
+            <th>Comments</th>
+            <th>Reported On</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for r in reports %}
+        <tr>
+          <td><a href="mailto:{{ r.voter_email }}">{{ r.voter_name }}</a></td>
+          <td><a href="/screening/{{ r.talk_id }}/">{{ r.title }}</a></td>
+          <td>{{ r.feedback }}</td>
+          <td>{{ r.date|date }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{%endblock body%}
