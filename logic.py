@@ -342,7 +342,8 @@ def scored_proposals():
 
 def screening_progress():
     q = '''SELECT vote_count, COUNT(vote_count) as quantity
-            FROM proposals GROUP BY vote_count
+            FROM proposals WHERE withdrawn = false
+            GROUP BY vote_count
             ORDER BY vote_count ASC'''
     return fetchall(q)
 
