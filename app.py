@@ -320,9 +320,6 @@ def screening(id):
     if not proposal or proposal.withdrawn:
         abort(404)
 
-    if request.user.email in (x.email.lower() for x in proposal.authors):
-        abort(404)
-
     unread = l.is_unread(request.user.id, id)
     discussion = l.get_discussion(id)
 
