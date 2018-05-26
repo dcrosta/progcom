@@ -120,4 +120,17 @@ def coc_reports():
 
 @bp.route('/votes/')
 def vote_distribution():
-    return "hello"
+    labels = {
+        -3: "CoC Violation",
+        -2: "Definite no",
+        -1: "Don't like",
+        0: "Ambivalent",
+        1: "Like",
+        2: "Like a lot",
+    }
+    votes = l.vote_distribution()
+    vote_distribution = [
+        {"label": labels[v], "count": c}
+        for v, c in votes
+    ]
+    return render_template('admin/vote_distribution.html', vote_distribution=vote_distribution)

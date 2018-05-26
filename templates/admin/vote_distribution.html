@@ -1,0 +1,44 @@
+{%extends "base.html"%}
+{%block body %}
+<div class="col-md-12">
+    <h4>Vote Distribution</h4>
+    <div id="vote-distribution">
+        <svg></svg>
+    </div>
+</div>
+{%endblock body%}
+
+{%block extracss%}
+<link rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.css">
+<style type="text/css">
+#vote-distribution svg {height:200px;}
+</style>
+{%endblock%}
+{%block extrajs%}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.8/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.1/nv.d3.min.js"></script>
+<script type="text/javascript">
+var vote_distribution={{vote_distribution|tojson}};
+
+$(document).ready(function(){
+    var zero_margin = {bottom:20, left:0, right:30, top:0};
+
+    nv.addGraph(function(){
+        var chart = nv.models.multiBarChart()
+            .x(function(d){return d.label;})
+            .y(function(d){return d.count;})
+            .reduceXTicks(true)
+            .rightAlignYAxis(true)
+            .showControls(false)
+            .margin(zero_margin);
+        chart.yAxis.tickFormat(Math.floor);
+        d3.select('#vote-distribution svg')
+            .datum([{key:'votes', values:vote_distribution}])
+            .call(chart)
+        nv.utils.windowResize(chart.update);
+        return chart;
+    });
+});
+</script>
+{%endblock%}

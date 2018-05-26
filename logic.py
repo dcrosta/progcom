@@ -1117,6 +1117,7 @@ def send_emails():
     print 'Declined: {}'.format(declined)
     print 'Accepted: {}'.format(acceptance)
 
+
 def code_of_conduct_reports():
     q = '''SELECT 
             u.email as voter_email,
@@ -1130,4 +1131,13 @@ def code_of_conduct_reports():
             JOIN proposals p ON (v.proposal = p.id)
             WHERE v.scores->>'1' = '-3'
     '''
+    return fetchall(q)
+
+
+def vote_distribution():
+    q = '''SELECT CAST(scores->>'1' AS INT) AS vote
+                , COUNT(1)                  AS count
+             FROM votes
+         GROUP BY vote
+         ORDER BY vote ASC'''
     return fetchall(q)
