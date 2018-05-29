@@ -129,7 +129,7 @@ def get_user(id):
 
 def list_users():
     q = '''SELECT id, email, display_name, created_on, approved_on,
-            (SELECT COUNT(*) FROM votes WHERE users.id=votes.voter)
+            (SELECT COUNT(*) FROM votes v JOIN proposals p ON (p.id = v.proposal) WHERE users.id=v.voter AND p.withdrawn = false)
             AS votes,
             (SELECT MAX(updated_on) FROM votes WHERE users.id=votes.voter)
             AS last_voted,
@@ -202,10 +202,11 @@ def add_proposal(data):
     return data['id']
 
 def get_vote_percentage(email, id):
-    q = '''SELECT COUNT(*) FROM proposals WHERE NOT withdrawn
-            AND NOT (lower(%s) = ANY(author_emails) )'''
+    q = '''SELECT COUNT(*) FROM proposals WHERE NOT withdrawn'''
     total = scalar(q, email)
-    q = 'SELECT COUNT(*) FROM votes WHERE voter=%s'
+    q = '''SELECT COUNT(*) FROM votes
+           JOIN proposals ON (proposals.id = votes.proposal)
+           WHERE voter=%s AND proposals.withdrawn=false'''
     votes = scalar(q, id)
     return "%0.2f" % (100.0*votes/total)
 
