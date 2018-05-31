@@ -21,6 +21,7 @@
               <td>{{version.duration}}</td></tr>
           </tbody>
         </table>
+        <section id="proposal">
         <h3>Abstract</h3>
         <p>
         {{version.abstract|markdown}}
@@ -39,6 +40,7 @@
         {{version.notes|markdown}}
         </p>
         {% endif %}
+        </section>
     </div>
 {%endfor%}
   </div>

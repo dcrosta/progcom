@@ -70,4 +70,14 @@
 #vote-form textarea {
   width: 100%;
   min-height: 10em;
+  border: 1px solid #505050;
+}
+
+@media (max-width: 600px) {
+  section#proposal {
+    font-size: 110%;
+  }
+  section#proposal pre {
+    font-size: 105%;
+  }
 }
