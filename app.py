@@ -94,6 +94,8 @@ def security_check():
 
     if request.user and (not request.user.approved or request.user.disabled):
         session.clear()
+        if path:
+            session['next'] = path
         return redirect(url_for('login'))
 
     request.user.is_admin = bool(request.user.email in _ADMIN_EMAILS)
@@ -117,6 +119,8 @@ def security_check():
         if path.startswith(prefix):
             return
 
+    if path:
+        session['next'] = path
     return redirect(url_for('login'))
 
 @app.route('/user/login/')
@@ -138,7 +142,12 @@ def login_post():
         flash('Only program committee members may log in')
         return redirect(url_for('login'))
     session['userid'] = uid
-    return redirect('/')
+    next = session.get('next')
+    if next and next.startswith('/'):
+        del session['next']
+        return redirect(next)
+    else:
+        return redirect('/')
 
 @app.route('/user/new/')
 def new_user():
