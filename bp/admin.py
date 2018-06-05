@@ -1,3 +1,4 @@
+from operator import attrgetter
 from flask import (Blueprint, render_template, jsonify, request,
                     redirect, url_for, flash)
 import requests, os
@@ -50,7 +51,9 @@ def assign_proposal():
 
 @bp.route('/users/')
 def list_users():
-    return render_template('admin/user_list.html', users=l.list_users())
+    users = l.list_users()
+    users.sort(key=attrgetter("id"), reverse=True)
+    return render_template('admin/user_list.html', users=users)
 
 @bp.route('/users/<int:uid>/approve/', methods=['POST'])
 def approve_user(uid):
