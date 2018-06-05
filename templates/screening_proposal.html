@@ -12,7 +12,7 @@
         {{ pr.proposal_render(proposal, anonymize=True, hidetimes=True)}}
     </div>
     <div class="col-md-4" id="right-column">
-        {{ pr.user_vote_render(standards, existing_vote) }}
+        {{ pr.user_vote_render(standards, existing_vote, voting_ended) }}
 
         <div class="alert alert-warning">
             <p>Out of respect for potential speakers, please treat all of

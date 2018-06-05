@@ -62,7 +62,7 @@ btn-default
 {% endif -%}
 {% endmacro %}
 
-{%macro user_vote_render(standards, existing_vote)%}
+{%macro user_vote_render(standards, existing_vote, voting_ended)%}
         <div class="panel panel-primary" id="user-vote-block">
             <div class="panel-heading"
             data-content="These votes were loaded from your local browser cache, and are not yet saved." id="vote-panel">
@@ -80,22 +80,29 @@ btn-default
                         {% endif %}
                         <button type="button" id="standard-id-{{s.id}}-plus-2"
                                 class="btn score {{ btn_css(score, 2) }}"
+                                {% if voting_ended %}disabled{% endif %}
                                 data-val="2">I love this talk: I would change my schedule to see this talk at the conference</button>
                         <button type="button" id="standard-id-{{s.id}}-plus-1"
                                 class="btn score {{ btn_css(score, 1) }}"
+                                {% if voting_ended %}disabled{% endif %}
                                 data-val="1">I like this talk: I would probably see it at the conference</button>
                         <button type="button" id="standard-id-{{s.id}}-zero"
                                 class="btn score {{ btn_css(score, 0) }}"
+                                {% if voting_ended %}disabled{% endif %}
                                 data-val="0">I'm ambivalent</button>
                         <button type="button" id="standard-id-{{s.id}}-minus-1"
                                 class="btn score {{ btn_css(score, -1) }}"
+                                {% if voting_ended %}disabled{% endif %}
                                 data-val="-1">I'd rather not: this talk is not interesting to me</button>
                         <button type="button" id="standard-id-{{s.id}}-minus-2"
                                 class="btn score {{ btn_css(score, -2) }}"
+                                {% if voting_ended %}disabled{% endif %}
                                 data-val="-2">Definitely not: this talk has major technical issues or is not a complete proposal</button>
                         <button type="button" id="standard-id-{{s.id}}-minus-3"
                                 class="btn score {{ btn_css(score, -3) }}"
+                                {% if voting_ended %}disabled{% endif %}
                                 data-val="-3">Definitely not: this talk may pose a code of conduct issue</button>
+                        {% if not voting_ended %}
                         <input name="standard-{{s.id}}"
                             {%if existing_vote and existing_vote.scores %}
                                value="{{existing_vote.scores[s.id]}}"
@@ -103,6 +110,7 @@ btn-default
                                value=""
                             {% endif %}
                         type="hidden">
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}
@@ -110,7 +118,7 @@ btn-default
                   <td>
                     <p><strong>Additional feedback:</strong> (optional)</p>
                     <p>You may use this area to explain why you gave the score you did. <em id="explain-score">Please explain scores of "definitely not."</em></p>
-                    <textarea id="feedback" name="feedback">{{existing_vote.feedback}}</textarea>
+                    <textarea id="feedback" name="feedback"{% if voting_ended %} disabled{% endif %}>{{existing_vote.feedback}}</textarea>
                     <p><em>Feedback will only be visible to the PyGotham program committee, not to the speaker nor other voters.</em></p>
                   </td>
                 </tr>
@@ -120,7 +128,7 @@ btn-default
                     <a href="/" class="btn btn-default btn-lg">Next Proposal &raquo;</a>
                     {% endif %}
                     <button type="Submit" class="btn btn-primary pull-right" id="save"
-                        {% if not existing_vote %}
+                        {% if not existing_vote or voting_ended %}
                             disabled="disabled"
                         {% endif %}
                         >Save Vote</button>

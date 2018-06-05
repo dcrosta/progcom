@@ -34,6 +34,8 @@ app.config.THIS_IS_BATCH = THIS_IS_BATCH
 CUTOFF_FEEDBACK = 'CUTOFF_FEEDBACK' in os.environ
 app.config.CUTOFF_FEEDBACK = CUTOFF_FEEDBACK
 
+VOTING_ENDED = 'VOTING_ENDED' in os.environ
+
 _ADMIN_EMAILS = set(json.loads(os.environ['ADMIN_EMAILS']))
 app.config.ADMIN_EMAILS = _ADMIN_EMAILS
 
@@ -345,10 +347,13 @@ def screening(id):
                             standards=standards,
                             existing_vote=existing_vote,
                             unread=unread,
-                            percent=percent)
+                            percent=percent,
+                            voting_ended=VOTING_ENDED)
 
 @app.route('/screening/<int:id>/vote/', methods=['POST'])
 def vote(id):
+    if VOTING_ENDED:
+        abort(410)
     standards = l.get_standards()
     scores = {}
     for s in standards:
@@ -468,6 +473,9 @@ def pick():
             return redirect(url_for('screening', id=data[0].proposal))
 
     id = l.needs_votes(request.user.email, request.user.id)
+    if VOTING_ENDED:
+        flash("Voting is over, but you may still review your past votes")
+        return redirect(url_for('screening_stats'))
     if not id:
         flash("You have voted on every proposal!")
         return redirect(url_for('screening_stats'))
